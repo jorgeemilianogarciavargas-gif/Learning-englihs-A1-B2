@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluentia | Tu inglés, con rumbo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #17352d; --muted: #6d7e76; --cream: #f7f5ee; --paper: #fffefa;
+      --green: #1b6b54; --lime: #dff27c; --orange: #ff825c; --line: #e5e7df;
+      --shadow: 0 18px 50px rgba(29, 61, 51, .09);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "DM Sans", sans-serif; color: var(--ink); background: var(--cream); }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    .app { min-height: 100vh; display: grid; grid-template-columns: 224px 1fr; }
+    aside { position: fixed; inset: 0 auto 0 0; width: 224px; padding: 28px 18px; border-right: 1px solid var(--line); background: rgba(255,254,250,.92); display: flex; flex-direction: column; z-index: 10; }
+    .brand { font-family: Fraunces, serif; font-size: 27px; font-weight: 700; padding: 0 11px 32px; }
+    .brand span { color: var(--orange); }
+    nav { display: grid; gap: 7px; }
+    .nav-btn { border: 0; background: transparent; border-radius: 13px; padding: 12px 13px; text-align: left; display: flex; gap: 11px; align-items: center; color: var(--muted); font-weight: 600; }
+    .nav-btn.active { color: var(--ink); background: #edf2df; }
+    .nav-icon { width: 28px; height: 28px; border-radius: 9px; background: white; display: grid; place-items: center; font-size: 14px; }
+    .side-card { margin-top: auto; background: var(--ink); color: white; border-radius: 18px; padding: 18px; }
+    .side-card small { color: #b9c9c3; }
+    .side-card strong { display: block; font-family: Fraunces, serif; font-size: 18px; margin: 6px 0 12px; }
+    .mini-bar { height: 5px; border-radius: 8px; overflow: hidden; background: #49645c; }
+    .mini-bar i { display: block; width: 64%; height: 100%; background: var(--lime); }
+    main { grid-column: 2; padding: 25px 34px 50px; max-width: 1500px; width: 100%; margin: auto; }
+    header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .search { width: 300px; border: 1px solid var(--line); border-radius: 14px; padding: 11px 15px; background: var(--paper); color: var(--muted); }
+    .user { display: flex; gap: 11px; align-items: center; font-weight: 600; }
+    .avatar { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: var(--lime); border: 3px solid white; box-shadow: 0 3px 15px #ccd6c8; }
+    .view { display: none; animation: rise .35s ease both; }
+    .view.active { display: block; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+    .eyebrow { color: var(--orange); text-transform: uppercase; letter-spacing: .14em; font-size: 12px; font-weight: 700; }
+    h1, h2, h3 { font-family: Fraunces, serif; margin: 0; }
+    h1 { font-size: clamp(34px, 5vw, 60px); line-height: .98; letter-spacing: -.035em; }
+    h2 { font-size: 30px; }
+    h3 { font-size: 20px; }
+    .hero { min-height: 300px; background: var(--green); color: white; border-radius: 28px; padding: 36px 40px; overflow: hidden; position: relative; display: grid; grid-template-columns: 1.3fr .7fr; }
+    .hero p { color: #c6dcd4; max-width: 530px; margin: 18px 0 25px; line-height: 1.6; }
+    .hero .eyebrow { color: var(--lime); }
+    .hero-art { position: relative; }
+    .orbit { position: absolute; width: 280px; height: 280px; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; top: -25px; right: -10px; }
+    .orbit:before, .orbit:after { content: ""; position: absolute; border-radius: 50%; }
+    .orbit:before { width: 170px; height: 170px; border: 1px dashed rgba(255,255,255,.3); top: 55px; left: 55px; }
+    .orbit:after { width: 62px; height: 62px; background: var(--orange); top: 109px; left: 109px; box-shadow: 0 0 0 13px rgba(255,130,92,.2); }
+    .bubble { position: absolute; background: white; color: var(--ink); border-radius: 18px; padding: 13px 16px; box-shadow: var(--shadow); font-weight: 700; }
+    .bubble.one { top: 8px; right: 13px; transform: rotate(4deg); }
+    .bubble.two { bottom: 20px; left: 15px; transform: rotate(-5deg); }
+    .primary, .secondary { border: 0; padding: 12px 18px; border-radius: 12px; font-weight: 700; }
+    .primary { background: var(--lime); color: var(--ink); box-shadow: 0 8px 20px rgba(223,242,124,.17); }
+    .secondary { background: white; border: 1px solid var(--line); }
+    .section-head { margin: 32px 0 15px; display: flex; align-items: end; justify-content: space-between; }
+    .section-head p { margin: 5px 0 0; color: var(--muted); }
+    .dashboard-grid { display: grid; grid-template-columns: 1.5fr .8fr; gap: 22px; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 21px; padding: 22px; box-shadow: 0 8px 30px rgba(30,64,53,.035); }
+    .lesson-card { display: grid; grid-template-columns: 72px 1fr auto; gap: 17px; align-items: center; }
+    .lesson-icon { width: 68px; height: 68px; border-radius: 18px; background: #edf2df; display: grid; place-items: center; font-size: 27px; }
+    .lesson-card p, .card p { color: var(--muted); margin: 6px 0 0; line-height: 1.5; }
+    .meter { height: 7px; border-radius: 10px; background: #eceee8; overflow: hidden; margin-top: 15px; }
+    .meter i { display: block; height: 100%; border-radius: inherit; background: var(--orange); width: 72%; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .stat { background: #f1f4ea; border-radius: 14px; padding: 13px; }
+    .stat b { font-family: Fraunces, serif; display: block; font-size: 25px; }
+    .stat small { color: var(--muted); }
+    .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .skill { padding: 17px; border-radius: 17px; background: var(--paper); border: 1px solid var(--line); }
+    .skill-top { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 700; }
+    .skill span { color: var(--muted); font-size: 13px; }
+    .skill i { display: block; height: 5px; background: var(--green); border-radius: 7px; }
+    .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 24px; }
+    .level { border: 1px solid var(--line); background: var(--paper); border-radius: 22px; padding: 20px; min-height: 230px; transition: .25s; }
+    .level:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .level.current { background: var(--green); color: white; }
+    .level-tag { display: inline-flex; height: 42px; min-width: 42px; align-items: center; justify-content: center; border-radius: 12px; background: var(--lime); color: var(--ink); font-family: Fraunces, serif; font-size: 19px; font-weight: 700; }
+    .level h3 { margin-top: 19px; }
+    .level p { font-size: 13px; min-height: 63px; }
+    .level button { width: 100%; margin-top: 16px; }
+    .practice-wrap { display: grid; grid-template-columns: 1fr 300px; gap: 20px; margin-top: 24px; }
+    .question { padding: 32px; }
+    .question h2 { margin: 12px 0 25px; max-width: 620px; }
+    .options { display: grid; gap: 11px; }
+    .option { padding: 15px 17px; text-align: left; background: white; border: 1px solid var(--line); border-radius: 13px; transition: .2s; }
+    .option:hover { border-color: var(--green); }
+    .option.correct { background: #edf8d0; border-color: #9dbd3e; }
+    .option.wrong { background: #fff0eb; border-color: var(--orange); }
+    .feedback { min-height: 58px; margin-top: 18px; padding: 13px 16px; border-radius: 13px; background: #f2f4ee; color: var(--muted); }
+    .feedback strong { color: var(--ink); }
+    .session-tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+    .timer-pill { display: inline-flex; align-items: center; gap: 9px; padding: 11px 14px; border-radius: 999px; background: var(--ink); color: white; font-weight: 700; }
+    .timer-pill span { color: var(--lime); font-variant-numeric: tabular-nums; }
+    .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+    .plan-card { border: 1px solid var(--line); background: #f8f8f2; border-radius: 14px; padding: 13px; }
+    .plan-card b { display: block; margin-bottom: 5px; }
+    .plan-card small { color: var(--muted); line-height: 1.4; display: block; }
+    .daily-list { display: grid; gap: 13px; margin-top: 17px; }
+    .daily-item { display: flex; gap: 11px; align-items: center; }
+    .check { width: 25px; height: 25px; display: grid; place-items: center; border-radius: 8px; background: #eef1e9; font-size: 12px; }
+    .check.done { background: var(--lime); }
+    .big-title { max-width: 670px; }
+    .muted { color: var(--muted); }
+    .unit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+    .unit-card { border: 1px solid var(--line); border-radius: 18px; background: var(--paper); padding: 17px; }
+    .unit-card.locked { opacity: .55; }
+    .unit-card small { color: var(--muted); display: block; margin: 5px 0 12px; line-height: 1.45; }
+    .unit-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .pill { display: inline-flex; align-items: center; border-radius: 999px; background: #edf2df; padding: 6px 10px; font-size: 12px; font-weight: 700; color: var(--green); }
+    .tool-row { display: flex; gap: 9px; flex-wrap: wrap; margin: 14px 0 0; }
+    .ghost { background: transparent; border: 1px solid var(--line); padding: 10px 13px; border-radius: 12px; font-weight: 700; }
+    .progress-list { display: grid; gap: 10px; margin-top: 16px; }
+    .progress-row { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; background: #f6f7f0; border-radius: 14px; padding: 12px; }
+    .progress-row b { font-family: Fraunces, serif; }
+    .progress-row small { color: var(--muted); }
+    @media (max-width: 1050px) {
+      .level-grid { grid-template-columns: repeat(3, 1fr); }
+      .skills { grid-template-columns: repeat(2, 1fr); }
+      .hero { grid-template-columns: 1fr; }
+      .hero-art { display: none; }
+      .unit-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .app { display: block; } aside { position: static; width: auto; padding: 14px; flex-direction: row; overflow-x: auto; border-right: 0; }
+      .brand, .side-card, .nav-btn span:last-child { display: none; } nav { display: flex; } .nav-btn { padding: 6px; }
+      main { padding: 18px 14px 40px; } header { display: none; } .dashboard-grid, .practice-wrap { grid-template-columns: 1fr; }
+      .hero { padding: 27px 23px; min-height: 0; } .level-grid { grid-template-columns: 1fr; } .skills { grid-template-columns: 1fr 1fr; }
+      .lesson-card { grid-template-columns: 55px 1fr; } .lesson-card button { grid-column: 1 / -1; } h1 { font-size: 39px; }
+      .unit-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">fluentia<span>.</span></div>
+    <nav>
+      <button class="nav-btn active" data-view="home"><span class="nav-icon">⌂</span><span>Inicio</span></button>
+      <button class="nav-btn" data-view="route"><span class="nav-icon">↗</span><span>Mi ruta</span></button>
+      <button class="nav-btn" data-view="practice"><span class="nav-icon">✦</span><span>Practicar</span></button>
+      <button class="nav-btn" data-view="progress"><span class="nav-icon">◫</span><span>Progreso</span></button>
+    </nav>
+    <div class="side-card"><small>Objetivo semanal</small><strong>4 de 6 sesiones</strong><div class="mini-bar"><i></i></div></div>
+  </aside>
+  <main>
+    <header>
+      <div class="search">⌕ &nbsp; Busca una lección, tema o palabra...</div>
+      <div class="user"><div class="avatar">JA</div><span>Jorge</span></div>
+    </header>
+
+    <section class="view active" id="home">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">Tu próxima misión · A1</span>
+          <h1>Speak from<br>day one.</h1>
+          <p>Aprende inglés útil con sesiones breves, práctica real y un camino claro desde tus primeras palabras hasta la fluidez C1.</p>
+          <button class="primary go-practice">Continuar lección &nbsp;→</button>
+        </div>
+        <div class="hero-art"><div class="orbit"></div><div class="bubble one">How are you?</div><div class="bubble two">I'm doing great!</div></div>
+      </div>
+      <div class="dashboard-grid">
+        <div>
+          <div class="section-head"><div><h2>Continúa aprendiendo</h2><p>Tu siguiente pequeño paso.</p></div></div>
+          <div class="card lesson-card">
+            <div class="lesson-icon">☕</div><div><span class="eyebrow">Unidad 2 · Lección 3</span><h3>Ordering at a coffee shop</h3><p>Vocabulario y conversación · 8 min</p><div class="meter"><i></i></div></div>
+            <button class="secondary go-practice">Seguir →</button>
+          </div>
+        </div>
+        <div>
+          <div class="section-head"><div><h2>Esta semana</h2><p>Vas a buen ritmo.</p></div></div>
+          <div class="card"><strong>Racha actual: 4 días</strong><div class="stats"><div class="stat"><b>82</b><small>minutos</small></div><div class="stat"><b>146</b><small>palabras</small></div><div class="stat"><b>91%</b><small>precisión</small></div><div class="stat"><b>+320</b><small>XP</small></div></div></div>
+        </div>
+      </div>
+      <div class="section-head"><div><h2>Tus habilidades</h2><p>Un idioma se domina desde todos los ángulos.</p></div></div>
+      <div class="skills">
+        <div class="skill"><div class="skill-top">Listening <span>68%</span></div><i style="width:68%"></i></div>
+        <div class="skill"><div class="skill-top">Speaking <span>54%</span></div><i style="width:54%;background:var(--orange)"></i></div>
+        <div class="skill"><div class="skill-top">Reading <span>76%</span></div><i style="width:76%"></i></div>
+        <div class="skill"><div class="skill-top">Writing <span>61%</span></div><i style="width:61%;background:var(--orange)"></i></div>
+      </div>
+    </section>
+
+    <section class="view" id="route">
+      <span class="eyebrow">Ruta completa CEFR</span><h1 class="big-title">De tus primeras frases a pensar en inglés.</h1>
+      <p class="muted">Cada nivel integra conversación, escucha, lectura, gramática y cultura.</p>
+      <div class="level-grid" id="levels"></div>
+      <div class="section-head"><div><h2>Unidades desbloqueables</h2><p>Avanzas solo cuando completas el bloque anterior con 100%.</p></div></div>
+      <div class="unit-grid" id="unit-list"></div>
+    </section>
+
+    <section class="view" id="practice">
+      <span class="eyebrow">Práctica intensiva · A1</span><h1 class="big-title">30 minutos para entrenar inglés de verdad.</h1>
+      <div class="practice-wrap">
+        <div class="card question">
+          <span class="eyebrow" id="q-count">Pregunta 1 de 16</span>
+          <h2 id="question-text"></h2>
+          <div class="options" id="options"></div>
+          <div class="feedback" id="feedback">Elige la respuesta que suene más natural.</div>
+          <div class="tool-row">
+            <button class="ghost" id="listen-question">Escuchar pregunta</button>
+            <button class="ghost" id="listen-answer">Escuchar respuesta correcta</button>
+            <button class="ghost" id="review-errors">Repasar errores</button>
+          </div>
+          <div class="session-tools">
+            <div class="timer-pill">Sesión <span id="timer">30:00</span></div>
+            <button class="secondary" id="start-session">Iniciar 30 min</button>
+            <button class="primary" id="next" style="display:none">Siguiente pregunta →</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Plan de 30 minutos</h3><p>Más repeticiones, más contexto y mejor retención.</p>
+          <div class="plan-grid">
+            <div class="plan-card"><b>0-7 min</b><small>Frases útiles y vocabulario activo.</small></div>
+            <div class="plan-card"><b>7-15 min</b><small>Gramática simple en situaciones reales.</small></div>
+            <div class="plan-card"><b>15-24 min</b><small>Conversación: responder con naturalidad.</small></div>
+            <div class="plan-card"><b>24-30 min</b><small>Repaso final y mini reto oral.</small></div>
+          </div>
+          <div class="daily-list"><div class="daily-item"><span class="check done">✓</span><span>Repasar 10 palabras</span></div><div class="daily-item"><span class="check" id="practice-check">2</span><span>Completar 16 ejercicios</span></div><div class="daily-item"><span class="check">3</span><span>Hablar por 5 minutos</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="progress">
+      <span class="eyebrow">Tu evolución</span><h1 class="big-title">La constancia se está convirtiendo en confianza.</h1>
+      <div class="dashboard-grid" style="margin-top:28px">
+        <div class="card"><h2>Panorama</h2><p id="progress-copy">Tu progreso se calcula según las prácticas completadas con 100%.</p><div class="meter" style="height:12px;margin-top:28px"><i id="global-progress" style="width:18%;background:var(--green)"></i></div><div class="stats"><div class="stat"><b id="score-stat">91%</b><small>última precisión</small></div><div class="stat"><b id="unlocked-stat">1/5</b><small>prácticas A1</small></div><div class="stat"><b id="mistake-stat">0</b><small>errores por repasar</small></div><div class="stat"><b>B2</b><small>meta 2027</small></div></div><div class="progress-list" id="progress-list"></div></div>
+        <div class="card"><h3>Próximo hito</h3><p id="next-milestone">Completa “Daily routines” para desbloquear tu primera conversación guiada.</p><button class="primary go-practice" style="margin-top:20px">Practicar ahora</button></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  const routeData = [
+    ["A1","Primeros pasos","Presentarte, pedir comida y hablar de tu día.","En curso"],
+    ["A2","Vida cotidiana","Viajes, planes, experiencias y conversaciones breves.","Bloqueado"],
+    ["B1","Independencia","Expresar opiniones y desenvolverte con confianza.","Bloqueado"],
+    ["B2","Conversación fluida","Debatir, trabajar y comprender contenido complejo.","Bloqueado"],
+    ["C1","Dominio avanzado","Comunicar matices con precisión y naturalidad.","Bloqueado"]
+  ];
+  document.querySelector("#levels").innerHTML = routeData.map((x,i) => `<article class="level ${i===0?"current":""}"><span class="level-tag">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p><button class="${i===0?"primary":"secondary"}">${x[3]} ${i===0?"→":"·"}</button></article>`).join("");
+
+  const practiceSets = [
+  {
+    title: "Práctica 1 · Coffee shop",
+    focus: "pedir, pagar y responder con cortesía",
+    questions: [
+    {q:"You walk into a coffee shop. What do you say?", a:["Give me a coffee.","I'd like a coffee, please.","I am wanting coffee."], c:1, tip:"“I'd like...” es una forma amable y natural de pedir algo."},
+    {q:"The barista asks: “For here or to go?”", a:["To go, please.","I go away.","For taking."], c:0, tip:"“To go” significa para llevar."},
+    {q:"Choose the correct question:", a:["How much it costs?","How many does it cost?","How much does it cost?"], c:2, tip:"Con “does”, el verbo principal vuelve a su forma base: cost."},
+    {q:"Complete: “Can I pay ___ card?”", a:["with","by","from"], c:1, tip:"La expresión habitual es “pay by card”."},
+    {q:"Someone says: “Nice to meet you.” What is the best reply?", a:["Nice to meet you too.","I am nice.","Meet nice."], c:0, tip:"Responde con “Nice to meet you too” para devolver el saludo."},
+    {q:"Complete: “I usually ___ breakfast at 8.”", a:["have","has","having"], c:0, tip:"Con “I”, usa el verbo base: I have."},
+    {q:"Choose the natural sentence:", a:["I am 25 years.","I have 25 years old.","I am 25 years old."], c:2, tip:"En inglés la edad se expresa con “I am ... years old”."},
+    {q:"You do not understand. What do you say?", a:["Repeat me.","Could you repeat that, please?","You repeat."], c:1, tip:"“Could you...” es educado y muy útil en conversaciones reales."},
+    {q:"Complete: “She ___ from Mexico.”", a:["are","is","am"], c:1, tip:"Con “she/he/it” usamos “is”."},
+    {q:"Choose the correct negative sentence:", a:["I don't like tea.","I no like tea.","I doesn't like tea."], c:0, tip:"Con “I/you/we/they” usa “don't” para negar en presente simple."},
+    {q:"At a store, you want the price. What do you ask?", a:["How price?","How much is this?","What money this?"], c:1, tip:"“How much is this?” es la pregunta básica para pedir precio."},
+    {q:"Complete: “I live ___ a small apartment.”", a:["in","on","at"], c:0, tip:"Para vivir dentro de una casa o departamento, usa “in”."},
+    {q:"Choose the best answer to: “What do you do?”", a:["I'm a designer.","I do fine.","I am do work."], c:0, tip:"“What do you do?” normalmente pregunta por tu trabajo u ocupación."},
+    {q:"Complete: “There ___ two books on the table.”", a:["is","are","am"], c:1, tip:"Con plural usamos “there are”."},
+    {q:"You want to make a suggestion. Choose the natural phrase:", a:["Let's go for a walk.","We go walk now?","Let go walking."], c:0, tip:"“Let's...” sirve para sugerir hacer algo juntos."},
+    {q:"Mini speaking challenge: say this aloud in English.", a:["Hi, I'm Jorge. I'd like a coffee, please.","Hello, I Jorge coffee.","I am wanting one coffee now."], c:0, tip:"Practica decirlo en voz alta tres veces: lento, normal y con confianza."}
+    ]
+  },
+  {
+    title: "Práctica 2 · Daily routines",
+    focus: "hablar de hábitos y horarios",
+    questions: [
+      {q:"Complete: “I wake up ___ 7 o'clock.”", a:["in","on","at"], c:2, tip:"Para horas exactas usamos “at”: at 7 o'clock."},
+      {q:"Choose the natural sentence:", a:["I go to work by bus.","I go work in bus.","I am go to work bus."], c:0, tip:"“By bus” expresa el medio de transporte."},
+      {q:"What is the best answer to: “Do you exercise?”", a:["Yes, I do.","Yes, I am.","Yes, exercise."], c:0, tip:"Con preguntas en presente simple, responde con “do”."},
+      {q:"Complete: “She ___ lunch at noon.”", a:["have","has","having"], c:1, tip:"Con she/he/it, el verbo lleva -s: she has."},
+      {q:"Choose the correct question:", a:["What time do you start work?","What time you start work?","What time does you start work?"], c:0, tip:"La estructura es: question word + do + subject + verb."},
+      {q:"Complete: “I don't work ___ Sundays.”", a:["at","in","on"], c:2, tip:"Con días de la semana usamos “on”."},
+      {q:"A friend asks: “How was your day?”", a:["It was good, thanks.","It good thanks.","Was good I."], c:0, tip:"“It was good, thanks” es simple, natural y correcto."},
+      {q:"Mini speaking challenge: say this aloud.", a:["I wake up at seven and I go to work by bus.","I wake at seven and go work bus.","I am wake up at seven by work."], c:0, tip:"Di tu rutina real en 3 frases usando “I usually...”."}
+    ]
+  },
+  {
+    title: "Práctica 3 · Travel basics",
+    focus: "moverte en una ciudad y pedir ayuda",
+    questions: [
+      {q:"At the airport, choose the natural question:", a:["Where is baggage claim?","Where baggage?","Where are my bags place?"], c:0, tip:"“Where is...?” sirve para preguntar ubicaciones."},
+      {q:"Complete: “I have a reservation ___ tonight.”", a:["for","to","by"], c:0, tip:"Usamos “for” para indicar la fecha o momento de una reservación."},
+      {q:"You need help. What do you say?", a:["Can you help me, please?","Help me now.","You can me help?"], c:0, tip:"“Can you help me, please?” es claro y educado."},
+      {q:"Choose the correct sentence:", a:["I need a taxi.","I need taxi one.","I am need a taxi."], c:0, tip:"“Need” ya funciona como verbo principal: I need..." },
+      {q:"Complete: “Turn left ___ the traffic light.”", a:["at","in","on"], c:0, tip:"Para puntos específicos en una ruta, usa “at”."},
+      {q:"What is the best answer to: “Where are you from?”", a:["I'm from Mexico.","I from Mexico.","I am of Mexico."], c:0, tip:"La forma natural es “I'm from...”."},
+      {q:"Choose the polite request:", a:["Could I have the Wi-Fi password?","Give Wi-Fi password.","I want Wi-Fi password."], c:0, tip:"“Could I have...?” es una petición cortés."},
+      {q:"Mini speaking challenge: say this aloud.", a:["Excuse me, where is the train station?","Excuse, train station where?","Where train station me?"], c:0, tip:"Practica la frase cambiando “train station” por “hotel”, “bathroom” y “airport”."}
+    ]
+  },
+  {
+    title: "Práctica 4 · People and family",
+    focus: "describir personas, familia y posesiones",
+    questions: [
+      {q:"Complete: “This is ___ sister.”", a:["my","me","I"], c:0, tip:"Para posesión usamos “my”: my sister."},
+      {q:"Choose the natural description:", a:["He is tall and friendly.","He tall and friendly.","He is friendly tall."], c:0, tip:"Con adjetivos usamos “be”: he is tall."},
+      {q:"Complete: “They ___ two children.”", a:["has","have","are"], c:1, tip:"Con “they” usamos “have”."},
+      {q:"What is the best answer to: “Who is she?”", a:["She's my mother.","She my mother.","Her is mother."], c:0, tip:"“She's...” significa “She is...”."},
+      {q:"Choose the correct question:", a:["Do you have brothers or sisters?","Have you brothers or sisters?","You have brothers or sisters?"], c:0, tip:"En presente simple usamos “do” para preguntas."},
+      {q:"Complete: “My father works ___ a hospital.”", a:["at","on","to"], c:0, tip:"Para lugares de trabajo usamos normalmente “at”."},
+      {q:"Choose the opposite of “old” for a person:", a:["young","new","small"], c:0, tip:"Para personas, lo opuesto de “old” es “young”."},
+      {q:"Mini speaking challenge: say this aloud.", a:["My family is small, but we are very close.","My family small but close.","Family is small we close."], c:0, tip:"Cambia “small” por “big” si aplica a tu familia."}
+    ]
+  },
+  {
+    title: "Práctica 5 · Food and preferences",
+    focus: "decir lo que te gusta, pedir comida y explicar preferencias",
+    questions: [
+      {q:"Complete: “I like ___ food.”", a:["spicy","spice","spices"], c:0, tip:"“Spicy” es el adjetivo para comida picante."},
+      {q:"Choose the natural sentence:", a:["I don't eat meat.","I no eat meat.","I doesn't eat meat."], c:0, tip:"Con “I” usamos “don't” para negar."},
+      {q:"At a restaurant, choose the polite request:", a:["Could I see the menu, please?","Give menu.","I want see menu."], c:0, tip:"“Could I...” suena educado y natural."},
+      {q:"Complete: “What would you like ___ drink?”", a:["to","for","with"], c:0, tip:"La expresión es “something to drink” o “would you like to drink”."},
+      {q:"Choose the best answer to: “Are you hungry?”", a:["Yes, I am.","Yes, I do.","Yes, hungry."], c:0, tip:"Con adjetivos como “hungry”, responde con “be”: I am."},
+      {q:"Complete: “I prefer tea ___ coffee.”", a:["to","than","over"], c:0, tip:"La forma clásica es “prefer A to B”."},
+      {q:"Choose the natural sentence:", a:["Can I have the bill, please?","Can I the bill have?","I can bill please?"], c:0, tip:"“Can I have...” es una petición común."},
+      {q:"Mini speaking challenge: say this aloud.", a:["I like coffee, but I prefer tea in the morning.","I like coffee but prefer tea morning.","I am like coffee prefer tea."], c:0, tip:"Practica sustituyendo “coffee” y “tea” por comidas que sí te gusten."}
+    ]
+  }
+  ];
+  let currentPractice = Number(localStorage.getItem("fluentiaPractice") || 0);
+  if (!Number.isInteger(currentPractice) || currentPractice < 0 || currentPractice >= practiceSets.length) {
+    currentPractice = 0;
+    localStorage.setItem("fluentiaPractice", currentPractice);
+  }
+  let questions = practiceSets[currentPractice].questions;
+  let completedPractices = JSON.parse(localStorage.getItem("fluentiaCompleted") || "[]");
+  let mistakeBank = JSON.parse(localStorage.getItem("fluentiaMistakes") || "[]");
+  let qIndex = 0, score = 0, locked = false, completed = false, reviewMode = false, timerId = null, remainingSeconds = 30 * 60;
+  function saveState(){
+    localStorage.setItem("fluentiaPractice", currentPractice);
+    localStorage.setItem("fluentiaCompleted", JSON.stringify(completedPractices));
+    localStorage.setItem("fluentiaMistakes", JSON.stringify(mistakeBank));
+  }
+  function unlockedCount(){
+    let count = 1;
+    for(let i = 0; i < practiceSets.length; i++){
+      if(completedPractices.includes(i)) count = i + 2;
+      else break;
+    }
+    return Math.min(count, practiceSets.length);
+  }
+  if(currentPractice >= unlockedCount()) currentPractice = unlockedCount() - 1;
+  questions = practiceSets[currentPractice].questions;
+  function speak(text){
+    if(!("speechSynthesis" in window)) return;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = .86;
+    speechSynthesis.speak(utterance);
+  }
+  function mistakeId(question){ return `${question.q}|${question.a[question.c]}`; }
+  function addMistake(question){
+    const item = {...question, id: mistakeId(question)};
+    mistakeBank = mistakeBank.filter(x => x.id !== item.id).concat(item).slice(-20);
+    saveState();
+    renderDashboard();
+  }
+  function clearMistake(question){
+    mistakeBank = mistakeBank.filter(x => x.id !== mistakeId(question));
+    saveState();
+    renderDashboard();
+  }
+  function completePractice(index){
+    if(!completedPractices.includes(index)) completedPractices.push(index);
+    completedPractices.sort((a,b)=>a-b);
+    saveState();
+  }
+  function renderDashboard(){
+    const unlocked = unlockedCount();
+    const globalPct = Math.round((completedPractices.length / practiceSets.length) * 100);
+    document.querySelector("#levels").innerHTML = routeData.map((x,i) => {
+      const active = i === 0;
+      const status = i === 0 ? `${completedPractices.length}/${practiceSets.length} A1` : (i === 1 && completedPractices.length === practiceSets.length ? "Siguiente fase" : "Bloqueado");
+      return `<article class="level ${active?"current":""}"><span class="level-tag">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p><button class="${active?"primary":"secondary"}">${status} ${active?"→":"·"}</button></article>`;
+    }).join("");
+    document.querySelector("#unit-list").innerHTML = practiceSets.map((set,i) => {
+      const done = completedPractices.includes(i);
+      const open = i < unlocked;
+      return `<article class="unit-card ${open?"":"locked"}"><span class="pill">${done?"Completada":"A1 · Unidad "+(i+1)}</span><h3>${set.title.replace("Práctica ","")}</h3><small>${set.focus}. ${set.questions.length} ejercicios con speaking en voz alta.</small><button class="${open?"primary":"secondary"}" data-unit="${i}">${open ? (done?"Repetir":"Practicar") : "Bloqueada"}</button><div class="unit-meta"><span class="pill">100% para avanzar</span><span class="pill">Listening</span><span class="pill">Speaking</span></div></article>`;
+    }).join("");
+    document.querySelectorAll("[data-unit]").forEach(btn => btn.onclick = () => {
+      const index = Number(btn.dataset.unit);
+      if(index >= unlocked) return;
+      reviewMode = false;
+      currentPractice = index;
+      questions = practiceSets[currentPractice].questions;
+      qIndex = 0; score = 0; completed = false;
+      saveState();
+      renderQuestion();
+      showView("practice");
+    });
+    document.querySelector("#global-progress").style.width = `${Math.max(globalPct, 4)}%`;
+    document.querySelector("#unlocked-stat").textContent = `${unlocked}/${practiceSets.length}`;
+    document.querySelector("#mistake-stat").textContent = mistakeBank.length;
+    document.querySelector("#progress-copy").textContent = `Has completado ${completedPractices.length} de ${practiceSets.length} prácticas A1 con 100%. Cuando cierres A1, pasamos a A2 con diálogos más largos.`;
+    document.querySelector("#progress-list").innerHTML = practiceSets.map((set,i) => `<div class="progress-row"><span class="check ${completedPractices.includes(i)?"done":""}">${completedPractices.includes(i)?"✓":i+1}</span><div><b>${set.title}</b><br><small>${set.focus}</small></div><span class="pill">${i < unlocked ? "Disponible" : "Bloqueada"}</span></div>`).join("");
+    const next = practiceSets.find((_,i)=>!completedPractices.includes(i));
+    document.querySelector("#next-milestone").textContent = next ? `Siguiente meta: completa “${next.title}” con 100% para desbloquear el próximo bloque.` : "Terminaste el circuito A1 disponible. El siguiente gran paso es construir A2.";
+  }
+  function updateTimer(){
+    const minutes = String(Math.floor(remainingSeconds / 60)).padStart(2,"0");
+    const seconds = String(remainingSeconds % 60).padStart(2,"0");
+    document.querySelector("#timer").textContent = `${minutes}:${seconds}`;
+  }
+  function startTimer(){
+    if(timerId) return;
+    document.querySelector("#start-session").textContent = "Sesión activa";
+    timerId = setInterval(() => {
+      remainingSeconds = Math.max(0, remainingSeconds - 1);
+      updateTimer();
+      if(remainingSeconds === 0){
+        clearInterval(timerId);
+        timerId = null;
+        document.querySelector("#feedback").innerHTML = "<strong>Tiempo terminado.</strong> Respira, repasa tus errores y repite las frases difíciles en voz alta.";
+        document.querySelector("#start-session").textContent = "Reiniciar 30 min";
+      }
+    }, 1000);
+  }
+  function renderQuestion(){
+    completed=false; locked=false; document.querySelector("#next").style.display="none";
+    document.querySelector("#next").textContent="Siguiente pregunta →";
+    document.querySelector("#q-count").textContent=`Pregunta ${qIndex+1} de ${questions.length}`;
+    document.querySelector("#question-text").textContent=questions[qIndex].q;
+    document.querySelector("#feedback").innerHTML=reviewMode ? `<strong>Repaso de errores.</strong> Responde de nuevo lo que fallaste antes.` : `<strong>${practiceSets[currentPractice].title}</strong>: ${practiceSets[currentPractice].focus}.`;
+    document.querySelector("#options").innerHTML=questions[qIndex].a.map((a,i)=>`<button class="option" data-i="${i}">${String.fromCharCode(65+i)}. &nbsp;${a}</button>`).join("");
+    document.querySelectorAll(".option").forEach(b=>b.onclick=()=>answer(Number(b.dataset.i),b));
+  }
+  function answer(i,btn){
+    if(locked)return; locked=true; const current=questions[qIndex];
+    document.querySelectorAll(".option")[current.c].classList.add("correct");
+    if(i===current.c){score++; clearMistake(current); document.querySelector("#feedback").innerHTML=`<strong>¡Muy bien!</strong> ${current.tip}`;}
+    else {btn.classList.add("wrong"); addMistake(current); document.querySelector("#feedback").innerHTML=`<strong>Casi.</strong> ${current.tip}`;}
+    document.querySelector("#next").style.display="inline-block";
+  }
+  document.querySelector("#next").onclick=()=>{
+    if(completed){
+      const action = document.querySelector("#next").dataset.action;
+      if(action === "next-practice"){
+        currentPractice = Math.min(currentPractice + 1, practiceSets.length - 1);
+        localStorage.setItem("fluentiaPractice", currentPractice);
+      }
+      if(action === "restart-circuit"){
+        currentPractice = 0;
+        localStorage.setItem("fluentiaPractice", currentPractice);
+      }
+      questions = practiceSets[currentPractice].questions;
+      qIndex = 0;
+      score = 0;
+      completed = false;
+      renderQuestion();
+      return;
+    }
+    if(qIndex<questions.length-1){qIndex++;renderQuestion();}
+    else {
+      const pct=Math.round(score/questions.length*100);
+      const hasNextPractice = currentPractice < practiceSets.length - 1;
+      if(reviewMode){
+        document.querySelector("#question-text").textContent=`Repaso completado: ${score}/${questions.length}`;
+        document.querySelector("#options").innerHTML="";
+        document.querySelector("#feedback").innerHTML=`<strong>Buen repaso.</strong> Tu precisión fue de ${pct}%. Los errores corregidos salen de la cola automáticamente.`;
+        document.querySelector("#next").textContent="Volver a práctica actual →";
+        document.querySelector("#next").dataset.action="return-practice";
+        document.querySelector("#next").style.display="inline-block";
+        completed=true;
+        reviewMode=false;
+        questions = practiceSets[currentPractice].questions;
+        return;
+      }
+      document.querySelector("#question-text").textContent=`${practiceSets[currentPractice].title} completada: ${score}/${questions.length}`;
+      document.querySelector("#options").innerHTML="";
+      if(pct === 100 && hasNextPractice){
+        completePractice(currentPractice);
+        document.querySelector("#feedback").innerHTML=`<strong>100% perfecto.</strong> Desbloqueaste ${practiceSets[currentPractice + 1].title}. Ahora sí puedes avanzar.`;
+        document.querySelector("#next").textContent="Siguiente práctica →";
+        document.querySelector("#next").dataset.action="next-practice";
+      } else if(pct === 100) {
+        completePractice(currentPractice);
+        document.querySelector("#feedback").innerHTML=`<strong>100% perfecto.</strong> Terminaste todas las prácticas disponibles de este circuito. Puedes empezar de nuevo para reforzar.`;
+        document.querySelector("#next").textContent="Reiniciar circuito →";
+        document.querySelector("#next").dataset.action="restart-circuit";
+      } else {
+        document.querySelector("#feedback").innerHTML=`<strong>Práctica completada.</strong> Tu precisión fue de ${pct}%. Para desbloquear la siguiente práctica necesitas 100%; repite este bloque y corrige los errores.`;
+        document.querySelector("#next").textContent="Repetir práctica ↻";
+        document.querySelector("#next").dataset.action="repeat";
+      }
+      document.querySelector("#next").style.display="inline-block";
+      document.querySelector("#practice-check").classList.add("done"); document.querySelector("#practice-check").textContent="✓";
+      document.querySelector("#score-stat").textContent=pct+"%";
+      localStorage.setItem("fluentiaScore",pct);
+      renderDashboard();
+      completed=true;
+    }
+  };
+  function showView(id){
+    document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));
+    document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.view===id));
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>showView(b.dataset.view));
+  document.querySelectorAll(".go-practice").forEach(b=>b.onclick=()=>showView("practice"));
+  document.querySelector("#listen-question").onclick=()=>speak(questions[qIndex]?.q || "");
+  document.querySelector("#listen-answer").onclick=()=>{
+    const current = questions[qIndex];
+    if(current) speak(current.a[current.c]);
+  };
+  document.querySelector("#review-errors").onclick=()=>{
+    if(!mistakeBank.length){
+      document.querySelector("#feedback").innerHTML="<strong>Sin errores pendientes.</strong> Cuando falles una pregunta, aparecerá aquí para repasarla.";
+      return;
+    }
+    reviewMode = true;
+    questions = mistakeBank.map(x => ({q:x.q, a:x.a, c:x.c, tip:x.tip}));
+    qIndex = 0; score = 0; completed = false;
+    renderQuestion();
+  };
+  document.querySelector("#start-session").onclick=()=>{
+    if(remainingSeconds === 0){
+      remainingSeconds = 30 * 60;
+      updateTimer();
+      document.querySelector("#start-session").textContent = "Iniciar 30 min";
+    }
+    startTimer();
+  };
+  const saved=localStorage.getItem("fluentiaScore"); if(saved)document.querySelector("#score-stat").textContent=saved+"%";
+  updateTimer();
+  saveState();
+  renderDashboard();
+  renderQuestion();
+</script>
+</body>
+</html>
