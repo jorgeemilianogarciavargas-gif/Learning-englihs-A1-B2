@@ -5,6 +5,9 @@ Fluentia is a browser-based English learning app designed to guide a learner fro
 ## Current Features
 
 - A1 practice route with unlockable units.
+- Friendly pug guide for onboarding and motivation.
+- Diagnostic test that estimates CEFR level from A1 to B2.
+- Adaptive route recommendation based on diagnostic results.
 - Progression gated by 100% completion.
 - 30-minute practice session timer.
 - Immediate correction and explanations.
