@@ -127,6 +127,11 @@
     .pug-eye.left { left: 42px; } .pug-eye.right { right: 42px; }
     .pug-nose { position: absolute; left: 60px; top: 77px; width: 30px; height: 22px; background: #1d1714; border-radius: 45% 45% 55% 55%; z-index: 3; }
     .pug-mouth { position: absolute; left: 58px; top: 102px; width: 36px; height: 16px; border-bottom: 4px solid #211915; border-radius: 50%; z-index: 3; }
+    .mascot-team { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; }
+    .mascot-card { display: flex; gap: 12px; align-items: center; background: white; border: 1px solid var(--line); border-radius: 16px; padding: 12px; }
+    .mascot-avatar { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 17px; font-size: 31px; background: #f1f4ea; }
+    .mascot-card b { display: block; }
+    .mascot-card small { color: var(--muted); line-height: 1.35; display: block; }
     .diagnostic-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; margin-top: 24px; }
     .diagnostic-question { border: 1px solid var(--line); border-radius: 18px; background: var(--paper); padding: 18px; margin-bottom: 12px; }
     .diagnostic-question label { display: block; padding: 10px 12px; margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; background: white; cursor: pointer; }
@@ -153,6 +158,7 @@
       .lesson-card { grid-template-columns: 55px 1fr; } .lesson-card button { grid-column: 1 / -1; } h1 { font-size: 39px; }
       .unit-grid { grid-template-columns: 1fr; }
       .pug-panel { grid-template-columns: 1fr; }
+      .mascot-team { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -189,7 +195,7 @@
         <div>
           <div class="section-head"><div><h2>Continúa aprendiendo</h2><p>Tu siguiente pequeño paso.</p></div></div>
           <div class="card lesson-card">
-            <div class="lesson-icon">☕</div><div><span class="eyebrow">Unidad 2 · Lección 3</span><h3>Ordering at a coffee shop</h3><p>Vocabulario y conversación · 8 min</p><div class="meter"><i></i></div></div>
+            <div class="lesson-icon">🥞</div><div><span class="eyebrow">Día 1 · Breakfast</span><h3>Breakfast with Bruno</h3><p>Vocabulario, comida y conversación · 8 min</p><div class="meter"><i></i></div></div>
             <button class="secondary go-practice">Seguir →</button>
           </div>
         </div>
@@ -216,6 +222,10 @@
         <div>
           <h2>Hola, soy Bruno.</h2>
           <p class="muted">Soy tu compañero de inglés. Primero vamos a hacer una pequeña prueba para saber desde dónde empezar. No se trata de reprobar: se trata de encontrar tu ruta.</p>
+          <div class="mascot-team">
+            <div class="mascot-card"><span class="mascot-avatar">🐶</span><div><b>Bruno el pug</b><small>Te guía, explica errores y te anima cuando algo cuesta.</small></div></div>
+            <div class="mascot-card"><span class="mascot-avatar">🦁</span><div><b>Leo el león</b><small>Te reta a hablar con más confianza en cada práctica.</small></div></div>
+          </div>
           <div class="tool-row">
             <button class="primary" id="start-diagnostic">Empezar prueba →</button>
             <button class="secondary" id="reset-diagnostic">Reiniciar diagnóstico</button>
@@ -277,14 +287,14 @@
           </div>
         </div>
         <div class="card">
-          <h3>Plan de 30 minutos</h3><p>Más repeticiones, más contexto y mejor retención.</p>
+          <h3>Plan de comidas</h3><p>Cada día de práctica gira alrededor de una comida para aprender inglés útil y cotidiano.</p>
           <div class="plan-grid">
-            <div class="plan-card"><b>0-7 min</b><small>Frases útiles y vocabulario activo.</small></div>
-            <div class="plan-card"><b>7-15 min</b><small>Gramática simple en situaciones reales.</small></div>
-            <div class="plan-card"><b>15-24 min</b><small>Conversación: responder con naturalidad.</small></div>
-            <div class="plan-card"><b>24-30 min</b><small>Repaso final y mini reto oral.</small></div>
+            <div class="plan-card"><b>Día 1 · Breakfast</b><small>Café, rutina de mañana y pedidos simples.</small></div>
+            <div class="plan-card"><b>Día 2 · Lunch</b><small>Horarios, trabajo, comida del mediodía y hábitos.</small></div>
+            <div class="plan-card"><b>Día 3 · Dinner</b><small>Restaurante, reservaciones, ayuda y direcciones.</small></div>
+            <div class="plan-card"><b>Día 4+ · Snacks</b><small>Familia, gustos, preferencias y conversación diaria.</small></div>
           </div>
-          <div class="daily-list"><div class="daily-item"><span class="check done">✓</span><span>Repasar 10 palabras</span></div><div class="daily-item"><span class="check" id="practice-check">2</span><span>Completar 16 ejercicios</span></div><div class="daily-item"><span class="check">3</span><span>Hablar por 5 minutos</span></div></div>
+          <div class="daily-list"><div class="daily-item"><span class="check done">✓</span><span>Elegir comida del día</span></div><div class="daily-item"><span class="check" id="practice-check">2</span><span>Completar ejercicios con 100%</span></div><div class="daily-item"><span class="check">3</span><span>Leer y pronunciar como reto de Leo</span></div></div>
         </div>
       </div>
     </section>
@@ -328,8 +338,10 @@
 
   const practiceSets = [
   {
-    title: "Práctica 1 · Coffee shop",
-    focus: "pedir, pagar y responder con cortesía",
+    title: "Día 1 · Breakfast",
+    meal: "Breakfast",
+    mascot: "Bruno 🐶",
+    focus: "pedir cafe, hablar de la mañana y responder con cortesía",
     questions: [
     {q:"You walk into a coffee shop. What do you say?", a:["Give me a coffee.","I'd like a coffee, please.","I am wanting coffee."], c:1, tip:"“I'd like...” es una forma amable y natural de pedir algo."},
     {q:"The barista asks: “For here or to go?”", a:["To go, please.","I go away.","For taking."], c:0, tip:"“To go” significa para llevar."},
@@ -350,8 +362,10 @@
     ]
   },
   {
-    title: "Práctica 2 · Daily routines",
-    focus: "hablar de hábitos y horarios",
+    title: "Día 2 · Lunch",
+    meal: "Lunch",
+    mascot: "Leo 🦁",
+    focus: "hablar de hábitos, horarios y comida del mediodía",
     questions: [
       {q:"Complete: “I wake up ___ 7 o'clock.”", a:["in","on","at"], c:2, tip:"Para horas exactas usamos “at”: at 7 o'clock."},
       {q:"Choose the natural sentence:", a:["I go to work by bus.","I go work in bus.","I am go to work bus."], c:0, tip:"“By bus” expresa el medio de transporte."},
@@ -364,8 +378,10 @@
     ]
   },
   {
-    title: "Práctica 3 · Travel basics",
-    focus: "moverte en una ciudad y pedir ayuda",
+    title: "Día 3 · Dinner",
+    meal: "Dinner",
+    mascot: "Bruno 🐶",
+    focus: "moverte en una ciudad, pedir ayuda y cenar fuera",
     questions: [
       {q:"At the airport, choose the natural question:", a:["Where is baggage claim?","Where baggage?","Where are my bags place?"], c:0, tip:"“Where is...?” sirve para preguntar ubicaciones."},
       {q:"Complete: “I have a reservation ___ tonight.”", a:["for","to","by"], c:0, tip:"Usamos “for” para indicar la fecha o momento de una reservación."},
@@ -378,8 +394,10 @@
     ]
   },
   {
-    title: "Práctica 4 · People and family",
-    focus: "describir personas, familia y posesiones",
+    title: "Día 4 · Family snack",
+    meal: "Snack",
+    mascot: "Leo 🦁",
+    focus: "describir personas, familia y una merienda casual",
     questions: [
       {q:"Complete: “This is ___ sister.”", a:["my","me","I"], c:0, tip:"Para posesión usamos “my”: my sister."},
       {q:"Choose the natural description:", a:["He is tall and friendly.","He tall and friendly.","He is friendly tall."], c:0, tip:"Con adjetivos usamos “be”: he is tall."},
@@ -392,7 +410,9 @@
     ]
   },
   {
-    title: "Práctica 5 · Food and preferences",
+    title: "Día 5 · Favorite meal",
+    meal: "Favorite meal",
+    mascot: "Bruno 🐶 + Leo 🦁",
     focus: "decir lo que te gusta, pedir comida y explicar preferencias",
     questions: [
       {q:"Complete: “I like ___ food.”", a:["spicy","spice","spices"], c:0, tip:"“Spicy” es el adjetivo para comida picante."},
@@ -510,7 +530,7 @@
     document.querySelector("#unit-list").innerHTML = practiceSets.map((set,i) => {
       const done = completedPractices.includes(i);
       const open = i < unlocked;
-      return `<article class="unit-card ${open?"":"locked"}"><span class="pill">${done?"Completada":"A1 · Unidad "+(i+1)}</span><h3>${set.title.replace("Práctica ","")}</h3><small>${set.focus}. ${set.questions.length} ejercicios con speaking en voz alta.</small><button class="${open?"primary":"secondary"}" data-unit="${i}">${open ? (done?"Repetir":"Practicar") : "Bloqueada"}</button><div class="unit-meta"><span class="pill">100% para avanzar</span><span class="pill">Listening</span><span class="pill">Speaking</span></div></article>`;
+      return `<article class="unit-card ${open?"":"locked"}"><span class="pill">${done?"Completada":"A1 · "+set.meal}</span><h3>${set.title}</h3><small>${set.mascot} te acompaña para practicar ${set.focus}. ${set.questions.length} ejercicios con speaking en voz alta.</small><button class="${open?"primary":"secondary"}" data-unit="${i}">${open ? (done?"Repetir":"Practicar") : "Bloqueada"}</button><div class="unit-meta"><span class="pill">100% para avanzar</span><span class="pill">${set.meal}</span><span class="pill">Speaking</span></div></article>`;
     }).join("");
     document.querySelectorAll("[data-unit]").forEach(btn => btn.onclick = () => {
       const index = Number(btn.dataset.unit);
@@ -527,7 +547,7 @@
     document.querySelector("#unlocked-stat").textContent = `${unlocked}/${practiceSets.length}`;
     document.querySelector("#mistake-stat").textContent = mistakeBank.length;
     document.querySelector("#progress-copy").textContent = `Nivel diagnosticado: ${assignedLevel}. Has completado ${completedPractices.length} de ${practiceSets.length} prácticas A1 con 100%. La ruta se adapta conforme reforzamos bases.`;
-    document.querySelector("#progress-list").innerHTML = practiceSets.map((set,i) => `<div class="progress-row"><span class="check ${completedPractices.includes(i)?"done":""}">${completedPractices.includes(i)?"✓":i+1}</span><div><b>${set.title}</b><br><small>${set.focus}</small></div><span class="pill">${i < unlocked ? "Disponible" : "Bloqueada"}</span></div>`).join("");
+    document.querySelector("#progress-list").innerHTML = practiceSets.map((set,i) => `<div class="progress-row"><span class="check ${completedPractices.includes(i)?"done":""}">${completedPractices.includes(i)?"✓":i+1}</span><div><b>${set.title}</b><br><small>${set.mascot} · ${set.focus}</small></div><span class="pill">${i < unlocked ? set.meal : "Bloqueada"}</span></div>`).join("");
     const next = practiceSets.find((_,i)=>!completedPractices.includes(i));
     document.querySelector("#next-milestone").textContent = next ? `Siguiente meta: completa “${next.title}” con 100% para desbloquear el próximo bloque. Ruta sugerida por diagnóstico: ${assignedLevel}.` : `Terminaste el circuito A1 disponible. El siguiente gran paso es construir ${assignedLevel === "A1" ? "A2" : assignedLevel}.`;
   }
@@ -555,15 +575,15 @@
     document.querySelector("#next").textContent="Siguiente pregunta →";
     document.querySelector("#q-count").textContent=`Pregunta ${qIndex+1} de ${questions.length}`;
     document.querySelector("#question-text").textContent=questions[qIndex].q;
-    document.querySelector("#feedback").innerHTML=reviewMode ? `<strong>Repaso de errores.</strong> Responde de nuevo lo que fallaste antes.` : `<strong>${practiceSets[currentPractice].title}</strong>: ${practiceSets[currentPractice].focus}.`;
+    document.querySelector("#feedback").innerHTML=reviewMode ? `<strong>Repaso de errores.</strong> Responde de nuevo lo que fallaste antes.` : `<strong>${practiceSets[currentPractice].mascot} · ${practiceSets[currentPractice].title}</strong>: ${practiceSets[currentPractice].focus}.`;
     document.querySelector("#options").innerHTML=questions[qIndex].a.map((a,i)=>`<button class="option" data-i="${i}">${String.fromCharCode(65+i)}. &nbsp;${a}</button>`).join("");
     document.querySelectorAll(".option").forEach(b=>b.onclick=()=>answer(Number(b.dataset.i),b));
   }
   function answer(i,btn){
     if(locked)return; locked=true; const current=questions[qIndex];
     document.querySelectorAll(".option")[current.c].classList.add("correct");
-    if(i===current.c){score++; clearMistake(current); document.querySelector("#feedback").innerHTML=`<strong>¡Muy bien!</strong> ${current.tip}`;}
-    else {btn.classList.add("wrong"); addMistake(current); document.querySelector("#feedback").innerHTML=`<strong>Casi.</strong> ${current.tip}`;}
+    if(i===current.c){score++; clearMistake(current); document.querySelector("#feedback").innerHTML=`<strong>${practiceSets[currentPractice].mascot} dice: muy bien.</strong> ${current.tip}`;}
+    else {btn.classList.add("wrong"); addMistake(current); document.querySelector("#feedback").innerHTML=`<strong>${practiceSets[currentPractice].mascot} dice: casi.</strong> ${current.tip}`;}
     document.querySelector("#next").style.display="inline-block";
   }
   document.querySelector("#next").onclick=()=>{

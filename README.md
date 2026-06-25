@@ -6,6 +6,8 @@ Fluentia is a browser-based English learning app designed to guide a learner fro
 
 - A1 practice route with unlockable units.
 - Friendly pug guide for onboarding and motivation.
+- Mascot team with Bruno the pug and Leo the lion.
+- Meal-based daily practice structure.
 - Diagnostic test that estimates CEFR level from A1 to B2.
 - Adaptive route recommendation based on diagnostic results.
 - Progression gated by 100% completion.
