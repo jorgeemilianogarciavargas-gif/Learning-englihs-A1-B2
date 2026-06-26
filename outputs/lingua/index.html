@@ -71,6 +71,8 @@
     .mobile-card { margin-top: 14px; border: 1px solid #cddfb0; background: linear-gradient(135deg, #f4ffd9, #fffefa); }
     .mobile-card h3 { display: flex; gap: 9px; align-items: center; }
     .mobile-card small { color: var(--muted); display: block; line-height: 1.45; margin-top: 8px; }
+    .reset-note { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 12px; border-radius: 14px; background: #f6f7f0; }
+    .reset-note small { color: var(--muted); line-height: 1.4; }
     .lesson-card { display: grid; grid-template-columns: 72px 1fr auto; gap: 17px; align-items: center; }
     .lesson-icon { width: 68px; height: 68px; border-radius: 18px; background: #edf2df; display: grid; place-items: center; font-size: 27px; }
     .lesson-card p, .card p { color: var(--muted); margin: 6px 0 0; line-height: 1.5; }
@@ -184,12 +186,12 @@
       <button class="nav-btn" data-view="practice"><span class="nav-icon">✦</span><span>Practicar</span></button>
       <button class="nav-btn" data-view="progress"><span class="nav-icon">◫</span><span>Progreso</span></button>
     </nav>
-    <div class="side-card"><small>Objetivo semanal</small><strong>4 de 6 sesiones</strong><div class="mini-bar"><i></i></div></div>
+    <div class="side-card"><small>Objetivo semanal</small><strong id="weekly-goal">0 de 6 sesiones</strong><div class="mini-bar"><i id="weekly-bar" style="width:4%"></i></div></div>
   </aside>
   <main>
     <header>
       <div class="search">⌕ &nbsp; Busca una lección, tema o palabra...</div>
-      <div class="user"><div class="avatar">JA</div><span>Jorge</span></div>
+      <div class="user"><div class="avatar">IN</div><span>Invitado</span></div>
     </header>
 
     <section class="view active" id="home">
@@ -215,16 +217,16 @@
           </div>
         </div>
         <div>
-          <div class="section-head"><div><h2>Esta semana</h2><p>Vas a buen ritmo.</p></div></div>
-          <div class="card"><strong>Racha actual: 4 días</strong><div class="stats"><div class="stat"><b>82</b><small>minutos</small></div><div class="stat"><b>146</b><small>palabras</small></div><div class="stat"><b>91%</b><small>precisión</small></div><div class="stat"><b>+320</b><small>XP</small></div></div></div>
+          <div class="section-head"><div><h2>Esta semana</h2><p>Tu tablero inicia limpio.</p></div></div>
+          <div class="card"><strong id="streak-stat">Racha actual: 0 días</strong><div class="stats"><div class="stat"><b id="minutes-stat">0</b><small>minutos</small></div><div class="stat"><b id="words-stat">0</b><small>palabras</small></div><div class="stat"><b id="home-accuracy-stat">--</b><small>precisión</small></div><div class="stat"><b id="xp-stat">0</b><small>XP</small></div></div></div>
         </div>
       </div>
       <div class="section-head"><div><h2>Tus habilidades</h2><p>Un idioma se domina desde todos los ángulos.</p></div></div>
       <div class="skills">
-        <div class="skill"><div class="skill-top">Listening <span>68%</span></div><i style="width:68%"></i></div>
-        <div class="skill"><div class="skill-top">Speaking <span>54%</span></div><i style="width:54%;background:var(--orange)"></i></div>
-        <div class="skill"><div class="skill-top">Reading <span>76%</span></div><i style="width:76%"></i></div>
-        <div class="skill"><div class="skill-top">Writing <span>61%</span></div><i style="width:61%;background:var(--orange)"></i></div>
+        <div class="skill"><div class="skill-top">Listening <span>Pendiente</span></div><i style="width:4%"></i></div>
+        <div class="skill"><div class="skill-top">Speaking <span>Pendiente</span></div><i style="width:4%;background:var(--orange)"></i></div>
+        <div class="skill"><div class="skill-top">Reading <span>Pendiente</span></div><i style="width:4%"></i></div>
+        <div class="skill"><div class="skill-top">Writing <span>Pendiente</span></div><i style="width:4%;background:var(--orange)"></i></div>
       </div>
     </section>
 
@@ -317,7 +319,7 @@
     <section class="view" id="progress">
       <span class="eyebrow">Tu evolución</span><h1 class="big-title">La constancia se está convirtiendo en confianza.</h1>
       <div class="dashboard-grid" style="margin-top:28px">
-        <div class="card"><h2>Panorama</h2><p id="progress-copy">Tu progreso se calcula según las prácticas completadas con 100%.</p><div class="meter" style="height:12px;margin-top:28px"><i id="global-progress" style="width:18%;background:var(--green)"></i></div><div class="stats"><div class="stat"><b id="score-stat">91%</b><small>última precisión</small></div><div class="stat"><b id="unlocked-stat">1/5</b><small>prácticas A1</small></div><div class="stat"><b id="mistake-stat">0</b><small>errores por repasar</small></div><div class="stat"><b>B2</b><small>meta 2027</small></div></div><div class="progress-list" id="progress-list"></div></div>
+        <div class="card"><h2>Panorama</h2><p id="progress-copy">Tu progreso se calcula según las prácticas completadas con 100%.</p><div class="meter" style="height:12px;margin-top:28px"><i id="global-progress" style="width:4%;background:var(--green)"></i></div><div class="stats"><div class="stat"><b id="score-stat">--</b><small>última precisión</small></div><div class="stat"><b id="unlocked-stat">1/5</b><small>prácticas A1</small></div><div class="stat"><b id="mistake-stat">0</b><small>errores por repasar</small></div><div class="stat"><b>B2</b><small>meta 2027</small></div></div><div class="reset-note"><small>¿Estás probando con otro usuario en este mismo navegador? Reinicia los datos locales para empezar limpio.</small><button class="ghost" id="reset-app-data">Reiniciar datos</button></div><div class="progress-list" id="progress-list"></div></div>
         <div class="card"><h3>Próximo hito</h3><p id="next-milestone">Completa “Daily routines” para desbloquear tu primera conversación guiada.</p><button class="primary go-practice" style="margin-top:20px">Practicar ahora</button></div>
       </div>
     </section>
@@ -373,7 +375,7 @@
     {q:"Choose the best answer to: “What do you do?”", a:["I'm a designer.","I do fine.","I am do work."], c:0, tip:"“What do you do?” normalmente pregunta por tu trabajo u ocupación."},
     {q:"Complete: “There ___ two books on the table.”", a:["is","are","am"], c:1, tip:"Con plural usamos “there are”."},
     {q:"You want to make a suggestion. Choose the natural phrase:", a:["Let's go for a walk.","We go walk now?","Let go walking."], c:0, tip:"“Let's...” sirve para sugerir hacer algo juntos."},
-    {q:"Mini speaking challenge: say this aloud in English.", a:["Hi, I'm Jorge. I'd like a coffee, please.","Hello, I Jorge coffee.","I am wanting one coffee now."], c:0, tip:"Practica decirlo en voz alta tres veces: lento, normal y con confianza."}
+    {q:"Mini speaking challenge: say this aloud in English.", a:["Hi, I'm Alex. I'd like a coffee, please.","Hello, I Alex coffee.","I am wanting one coffee now."], c:0, tip:"Practica decirlo en voz alta tres veces: lento, normal y con confianza."}
     ]
   },
   {
@@ -561,6 +563,18 @@
     document.querySelector("#global-progress").style.width = `${Math.max(globalPct, 4)}%`;
     document.querySelector("#unlocked-stat").textContent = `${unlocked}/${practiceSets.length}`;
     document.querySelector("#mistake-stat").textContent = mistakeBank.length;
+    const savedScore = completedPractices.length ? localStorage.getItem("fluentiaScore") : null;
+    const minutes = completedPractices.length * 30;
+    const words = completedPractices.length * 24;
+    const xp = completedPractices.length * 80;
+    document.querySelector("#weekly-goal").textContent = `${Math.min(completedPractices.length, 6)} de 6 sesiones`;
+    document.querySelector("#weekly-bar").style.width = `${Math.max(Math.min(completedPractices.length / 6 * 100, 100), 4)}%`;
+    document.querySelector("#streak-stat").textContent = `Racha actual: ${completedPractices.length ? completedPractices.length + " días" : "0 días"}`;
+    document.querySelector("#minutes-stat").textContent = minutes;
+    document.querySelector("#words-stat").textContent = words;
+    document.querySelector("#home-accuracy-stat").textContent = savedScore ? `${savedScore}%` : "--";
+    document.querySelector("#xp-stat").textContent = xp;
+    document.querySelector("#score-stat").textContent = savedScore ? `${savedScore}%` : "--";
     document.querySelector("#progress-copy").textContent = `Nivel diagnosticado: ${assignedLevel}. Has completado ${completedPractices.length} de ${practiceSets.length} prácticas A1 con 100%. La ruta se adapta conforme reforzamos bases.`;
     document.querySelector("#progress-list").innerHTML = practiceSets.map((set,i) => `<div class="progress-row"><span class="check ${completedPractices.includes(i)?"done":""}">${completedPractices.includes(i)?"✓":i+1}</span><div><b>${set.title}</b><br><small>${set.mascot} · ${set.focus}</small></div><span class="pill">${i < unlocked ? set.meal : "Bloqueada"}</span></div>`).join("");
     const next = practiceSets.find((_,i)=>!completedPractices.includes(i));
@@ -707,7 +721,25 @@
     }
     startTimer();
   };
-  const saved=localStorage.getItem("fluentiaScore"); if(saved)document.querySelector("#score-stat").textContent=saved+"%";
+  document.querySelector("#reset-app-data").onclick=()=>{
+    ["fluentiaPractice","fluentiaCompleted","fluentiaMistakes","fluentiaAssignedLevel","fluentiaDiagnosticScore","fluentiaScore"].forEach(key => localStorage.removeItem(key));
+    currentPractice = 0;
+    completedPractices = [];
+    mistakeBank = [];
+    assignedLevel = "A1";
+    questions = practiceSets[currentPractice].questions;
+    qIndex = 0;
+    score = 0;
+    completed = false;
+    reviewMode = false;
+    saveState();
+    renderDiagnostic();
+    renderDashboard();
+    renderQuestion();
+    document.querySelector("#diagnostic-result").classList.remove("active");
+    document.querySelector("#feedback").innerHTML="<strong>Datos reiniciados.</strong> Esta instalación está lista para un usuario nuevo.";
+    showView("home");
+  };
   updateTimer();
   saveState();
   renderDiagnostic();
