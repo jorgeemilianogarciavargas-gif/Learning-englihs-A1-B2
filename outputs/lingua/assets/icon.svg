@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Fluentia</title>
+  <desc id="desc">Icono de Fluentia con una letra F y un sol de aprendizaje.</desc>
+  <rect width="512" height="512" rx="116" fill="#1b6b54"/>
+  <circle cx="374" cy="142" r="56" fill="#dff27c"/>
+  <path fill="#fffefa" d="M128 116h232v74H214v62h124v72H214v132h-86z"/>
+  <path fill="#ff825c" d="M305 338c45 0 77 25 84 67H227c8-42 36-67 78-67z"/>
+  <path fill="#dff27c" d="M122 406h88v50h-88z"/>
+</svg>

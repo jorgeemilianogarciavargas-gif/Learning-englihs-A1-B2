@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1b6b54">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Fluentia">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Fluentia | Tu inglés, con rumbo</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
@@ -60,6 +68,9 @@
     .section-head p { margin: 5px 0 0; color: var(--muted); }
     .dashboard-grid { display: grid; grid-template-columns: 1.5fr .8fr; gap: 22px; }
     .card { background: var(--paper); border: 1px solid var(--line); border-radius: 21px; padding: 22px; box-shadow: 0 8px 30px rgba(30,64,53,.035); }
+    .mobile-card { margin-top: 14px; border: 1px solid #cddfb0; background: linear-gradient(135deg, #f4ffd9, #fffefa); }
+    .mobile-card h3 { display: flex; gap: 9px; align-items: center; }
+    .mobile-card small { color: var(--muted); display: block; line-height: 1.45; margin-top: 8px; }
     .lesson-card { display: grid; grid-template-columns: 72px 1fr auto; gap: 17px; align-items: center; }
     .lesson-icon { width: 68px; height: 68px; border-radius: 18px; background: #edf2df; display: grid; place-items: center; font-size: 27px; }
     .lesson-card p, .card p { color: var(--muted); margin: 6px 0 0; line-height: 1.5; }
@@ -197,6 +208,10 @@
           <div class="card lesson-card">
             <div class="lesson-icon">🥞</div><div><span class="eyebrow">Día 1 · Breakfast</span><h3>Breakfast with Bruno</h3><p>Vocabulario, comida y conversación · 8 min</p><div class="meter"><i></i></div></div>
             <button class="secondary go-practice">Seguir →</button>
+          </div>
+          <div class="card mobile-card">
+            <h3>📱 App móvil personal</h3>
+            <small>Instálala desde el navegador de tu celular con “Agregar a pantalla de inicio”. Tus avances se guardan en tu dispositivo.</small>
           </div>
         </div>
         <div>
@@ -698,6 +713,11 @@
   renderDiagnostic();
   renderDashboard();
   renderQuestion();
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("service-worker.js").catch(() => {});
+    });
+  }
 </script>
 </body>
 </html>

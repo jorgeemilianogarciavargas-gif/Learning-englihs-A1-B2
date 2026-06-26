@@ -17,6 +17,16 @@ Fluentia is a browser-based English learning app designed to guide a learner fro
 - Listening buttons using the browser speech engine.
 - Speaking prompts for reading answers aloud.
 - Progress saved in `localStorage`.
+- Installable personal mobile app with PWA manifest and offline shell.
+
+## Install On Your Phone
+
+Open the GitHub Pages URL on your phone and choose:
+
+- Android/Chrome: menu -> Add to Home screen.
+- iPhone/Safari: Share -> Add to Home Screen.
+
+This keeps it as your personal app shortcut. Your progress stays on your device through browser storage.
 
 ## Run Locally
 
